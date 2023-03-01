@@ -55,7 +55,36 @@ test_yum(){
 fi
 }
 
+#安装部署vsftpd 软件包
+install_vsftpd(){
+    echo "test"
+}
 
+#初始化配置文件
+install_config(){
+    echo "config"
+}
+
+
+#创建FTP账户，如果账户已存在则直接退出脚本
+create_ftpuser(){
+    echo "creat ftpuser"
+}
+
+#删除FTP用户
+delete_ftpUser(){
+    echo "delet ftpUser"
+}
+
+#配置匿名用户
+anon_config(){
+    echo "配置匿名用户"
+}
+
+#服务管理
+proc_manager(){
+    echo "服务管理"
+}
 menu
 read -p "请输入选项【1-6】：" input
 
