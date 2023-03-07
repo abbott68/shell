@@ -11,17 +11,17 @@ echo $lines
 # Loop through each line
 # Get the line line=head -$i $logfile | tail -1
 # Extract the info we need
-for ((i=1; i<=$lines; i++)) 
-do 
-    timestamp= $(echo $line | awk '{print $1}')
-    user= $(echo $line | awk '{print $2}')
-    ip=$(echo $line | awk '{print $3}')
-    action=$(echo $line | awk '{print $4}')
+# for ((i=1; i<=$lines; i++)) 
+# do 
+#     timestamp= $(echo $lines | awk '{print $1}')
+#     user= $(echo $lines | awk '{print $2}')
+#     ip=$(echo $lines | awk '{print $3}')
+#     action=$(echo $lines | awk '{print $4}')
 
-    # Print out the info
-    echo "Timestamp: $timestamp"
-    echo "User: $user"
-    echo "IP: $ip"
-    echo "Action: $action"
-    echo ""
-done
+#     # Print out the info
+#     echo "Timestamp: $timestamp"
+#     echo "User: $user"
+#     echo "IP: $ip"
+#     echo "Action: $action"
+#     echo ""
+# done
