@@ -38,7 +38,7 @@ modify_hostsname(){
         if  [ $i   -eq 102 ]; then
             hostnamectl set-hostname k8s-master
             echo "刷新bash"
-            bash 
+
         elif [ $i  -eq  107 ]; then
             hostnamectl set-hostname k8s-node01
             echo "刷新bash"
@@ -46,11 +46,10 @@ modify_hostsname(){
         elif [ $i  -eq  108 ]; then
             hostnamectl set-hostname k8s-node02
             echo "刷新bash"
-            bash 
+     
         elif [ $i  -eq  109 ]; then
             hostnamectl set-hostname k8s-node03
-            echo "刷新bash"
-            bash 
+            echo "刷新bash" 
         else
             echo "没有匹配到所有"
         fi
