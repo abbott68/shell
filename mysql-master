@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# 安装MySQL 8.0
+echo "Installing MySQL 8.0..."
+sudo dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
+sudo dnf install -y mysql-server
+
+# 启动MySQL并设置开机自启
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+
+# 获取初始密码
+initial_password=$(sudo grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}')
+
+# 配置MySQL安全性
+mysql_secure_installation <<EOF
+
+y
+$initial_password
+your-root-password
+your-root-password
+y
+y
+y
+y
+EOF
+
+# 创建主服务器上的数据库和用户（用于主从复制）
+mysql -u root -p"your-root-password" <<EOF
+CREATE DATABASE mydb;
+CREATE USER 'repl_user'@'%' IDENTIFIED BY 'repl_password';
+GRANT REPLICATION SLAVE ON *.* TO 'repl_user'@'%';
+FLUSH PRIVILEGES;
+EOF
+
+# 获取主服务器的二进制日志文件名和位置
+binlog_file=$(mysql -u root -p"your-root-password" -e "SHOW MASTER STATUS\G" | grep File | awk '{print $2}')
+binlog_position=$(mysql -u root -p"your-root-password" -e "SHOW MASTER STATUS\G" | grep Position | awk '{print $2}')
+
+echo "Master MySQL server setup is complete."
+echo "Binlog File: $binlog_file"
+echo "Binlog Position: $binlog_position"
