@@ -25,6 +25,16 @@ y
 y
 EOF
 
+# 配置从服务器复制
+echo "Configuring MySQL replication on slave server..."
+cat <<EOL | sudo tee -a /etc/my.cnf
+server-id = 1
+log_bin = /var/log/mysql/mysql-bin.log
+relay_log = /var/log/mysql/mysql-relay-bin.log
+log_slave_updates = 1
+read_only = 1
+EOL
+
 # 创建主服务器上的数据库和用户（用于主从复制）
 mysql -u root -p"your-root-password" <<EOF
 CREATE DATABASE mydb;
