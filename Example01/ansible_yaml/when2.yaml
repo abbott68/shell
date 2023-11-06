@@ -1,0 +1,22 @@
+- name: start service 
+  hosts: web
+  remote_user: root
+  tasks:
+  - name:  start httpd service
+    service:
+      name: httpd
+      state: started
+  - name: modify index.html
+    template:
+      src: index.j2
+      dest: /var/www/html/index.html
+    notify:
+      - restart httpd
+    handlers:
+      - name: restart apache
+        ansible.builtin.service:
+          name: httpd
+          state: restarted
+    when: 
+      #ansible_facts['all_ipv4_addresses'] == "192.168.218.69"
+      ansible_facts['nodename'] == "web69-server.com"

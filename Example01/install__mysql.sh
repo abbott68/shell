@@ -1,6 +1,6 @@
 #!/bin/bash
 MEM_Capacity=$(free -h | grep Mem | awk '{print "总内存:" $2 "n" "剩余内存:" $4}')
-fdisk_Capacity=$(df -h | grep /$ | awk '{print "磁盘总容量:" $2, "\n" "磁盘已使用:" $5, "\n" "磁盘剩余:"$4}')
+Fdisk_Capacity=$(df -h | grep /$ | awk '{print "磁盘总容量:" $2, "\n" "磁盘已使用:" $5, "\n" "磁盘剩余:"$4}')
 menu() {
   echo =======主 菜 单=======
   echo =======1. 获取主机信息=======
@@ -63,7 +63,7 @@ Installation_Methods() {
       fdisk_total=$(df -h | grep /$ | awk '{print "磁盘总容量:" $2}' | awk -F: '{print $2}' | grep -oP '\d*\.\d+')
       MEM_total=$(free -h | grep Mem | awk '{print "总内存:" $2}' | awk -F: '{print $2}' | grep -oP '\d*\.\d+')
       if
-        [ $fdisk_total 30 ] >= && [ $MEM_total 4 ] >=
+        [ $fdisk_total >= 30 ] && [ $MEM_total >=  4 ]
       then
         echo "恭喜您满足环境可以执行安装......."
       else
