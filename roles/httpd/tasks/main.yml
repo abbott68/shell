@@ -1,0 +1,27 @@
+---
+- name: httpd httpd-devel httpd-manual软件包安装
+  yum: name={{item}} state=latest
+  with_items:
+    - httpd
+    - httpd-devel
+    - httpd-manual
+  when: ansible_facts['nodename'] == "web69-server.com"
+
+- name: 创建apache管理用户 www
+  user: name={{user}} state=present
+  when: ansible_facts['nodename'] == "web69-server.com"
+
+
+- name: 设置apache开机启动，并启动服务
+  service: name=httpd enabled=yes state=started
+  when: ansible_facts['nodename'] == "web69-server.com"
+
+- name: 拷贝配置文件，初始化业务
+  copy: src=/etc/ansible/roles/httpd/files/httpd.conf dest=/etc/httpd/conf/httpd.conf
+  when: ansible_facts['nodename'] == "web69-server.com"
+  notify:
+    - restart apache
+
+- name: 拷贝此时页面
+  copy: src=/etc/ansible/roles/httpd/files/index.php   dest=/var/www/html/ 
+  when: ansible_facts['nodename'] == "web69-server.com"

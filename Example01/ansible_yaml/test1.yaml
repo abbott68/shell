@@ -1,0 +1,34 @@
+- name: update mysql
+  hosts: db
+  remote_user: root
+  tasks: 
+  - name: install  mysql
+    yum: 
+      name: "{{ item }}"
+      state:  removed
+    loop:
+      - mysql
+      - mysql-devel
+      - nginx 
+      - httpd
+
+
+- name: remove service
+  hosts:  db
+  remote_user: root
+  tasks:
+  - name: remove httpd
+    yum: 
+      name: "{item.name}"
+      state: absent
+    loop:
+       - { name: 'httpd' }
+       - { name: 'mysql'  }
+       - { name: 'mysql-devel' }
+
+
+ 
+
+#  - name: install nginx
+#    yum: name=nginx  state=installed
+  

@@ -193,16 +193,16 @@ service_Manager() {
   read -p "请输入您要执行服务:" string
   case $string in
   start)
-    systmectl start mysqld
+    systemctl start mysqld
     ;;
   stop)
-    systmectl stop mysqld
+    systemctl stop mysqld
     ;;
   restart)
-    systmectl restart mysqld
+    systemctl restart mysqld
     ;;
   status)
-    systmectl status mysqld
+    systemctl status mysqld
     ;;
   *)
     echo -e "\033[31m Error输入错误；请重新输入.. start|stop| restart| status \033[0m"

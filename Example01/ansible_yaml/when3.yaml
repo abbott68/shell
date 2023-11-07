@@ -1,0 +1,15 @@
+- name: update 
+  hosts: all
+  remote_user: root
+  tasks: 
+  - name: 
+    yum: 
+      name: '{item}'
+    loop: 
+      - apache 
+      - nginx
+  when:
+      ansible_facts['ansible_distribution_version'] == "7.9"
+
+  
+    

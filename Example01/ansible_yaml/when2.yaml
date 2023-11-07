@@ -1,8 +1,9 @@
-- name: start service 
+---
+- name: start service
   hosts: web
   remote_user: root
   tasks:
-  - name:  start httpd service
+  - name: start httpd service
     service:
       name: httpd
       state: started
@@ -12,11 +13,10 @@
       dest: /var/www/html/index.html
     notify:
       - restart httpd
-    handlers:
-      - name: restart apache
-        ansible.builtin.service:
-          name: httpd
-          state: restarted
-    when: 
-      #ansible_facts['all_ipv4_addresses'] == "192.168.218.69"
+    when:
       ansible_facts['nodename'] == "web69-server.com"
+  handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted

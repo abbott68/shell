@@ -1,0 +1,20 @@
+- name: mysql 用户创建
+  user: name={{user}} state=present
+  when: ansible_facts['nodename'] == 'mysql-server.com'
+- name: mysql 软件安装
+  yum: name={{item}} state=latest
+  with_items:
+    - mariadb
+    - mariadb-server
+  when: ansible_facts['nodename'] == 'mysql-server.com'
+
+- name: 启动服务，并设置开机启动
+  service: name=mariadb enabled=yes state=started
+  when: ansible_facts['nodename'] == 'mysql-server.com'
+
+- name: 改变mysql文件的所有者为mysql
+  file: path='/usr/lib/mysql' owner={{user}} group={{user}} recurse=yes
+  when: ansible_facts['nodename'] == 'mysql-server.com'
+
+
+

@@ -1,0 +1,25 @@
+- name: 安装php
+  yum: name={{item}} state=latest
+  with_items:
+    - php
+    - php-mysqlnd
+    - php-gd
+    - php-ldap
+    - php-odbc
+    - php-pear
+    - php-xml
+    - php-xmlrpc
+    - php-mbstring
+    - php-snmp
+    - php-soap
+    - curl
+    - curl-devel 
+    - php-bcmath
+    - php-fpm
+  when: ansible_facts['nodename'] == "php-server.com"
+
+- name: copy www.conf to /etc/php-fpm.d
+  copy: src=/etc/ansible/roles/php/files/www.conf dest=/etc/php-fpm.d force=yes
+  when: ansible_facts['nodename'] == "php-server.com"
+  notify:
+    - restart php-fpm
