@@ -7,4 +7,3 @@ roles
 `ansible-galaxy 命令：`
 example
 `ansible-galaxy  init  abbott.角色的名称`
-
